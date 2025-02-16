@@ -18,3 +18,23 @@ This directory contains documentation about the resources used in our real-world
    - Monitoring resources
    - Logging configuration
    - Operational tooling
+
+# Realworld Examples
+
+This directory contains real-world examples and best practices for various aspects of Kubernetes.
+
+## Contents
+- [Architecture Overview](00-architecture-overview.md)
+- [Core Components](01-core-components.md)
+- [Networking & Security](02-networking-security.md)
+- [Operations](03-operations.md)
+- [Platform Tools](04-platform-tools.md)
+- [Terraform Guide](05-terraform-guide.md)
+- [Alerts & Monitoring](06-alerts-monitoring.md)
+- [Environment Config](07-environment-config.md)
+- [Cluster](cluster.md)
+- [Current vs Best Practices](current-vs-best-practices.md)
+- [Directory Overview](directory-overview.md)
+- [Infrastructure Guide](infrastructure-guide.md)
+- [Overview](overview.md)
+- [Technical Details](technical-details.md)
