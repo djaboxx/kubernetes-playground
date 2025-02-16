@@ -254,15 +254,42 @@ More info: [Default Policies](https://kubernetes.io/docs/concepts/services-netwo
    - Monitors all network activity
    Details: [Zero Trust Networks](https://kubernetes.io/docs/concepts/services-networking/network-policies/#default-deny-all-ingress-and-all-egress-traffic)
 
-## Additional Resources
+## Hands-on Session: Basic Cluster Operations and Helm Fundamentals
 
-### Official Documentation
-- [Kubernetes Security](https://kubernetes.io/docs/concepts/security/)
-- [HashiCorp Vault](https://www.vaultproject.io/docs)
-- [Cert-Manager](https://cert-manager.io/docs/)
-- [Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
+In this hands-on session, we'll cover basic cluster operations and Helm fundamentals. Follow these steps:
 
-### Security Tools
-- [Trivy Scanner](https://github.com/aquasecurity/trivy)
-- [Falco Runtime Security](https://falco.org/)
-- [Open Policy Agent](https://www.openpolicyagent.org/docs/latest/)
+1. **Install Helm**:
+   - Download and install Helm: [Installation Guide](https://helm.sh/docs/intro/install/)
+   - Initialize Helm: `helm init`
+
+2. **Create a Helm Chart**:
+   - Create a new Helm chart using the following command:
+     ```sh
+     helm create mychart
+     ```
+
+3. **Deploy the Helm Chart**:
+   - Deploy the Helm chart to your cluster:
+     ```sh
+     helm install mychart --name myrelease
+     ```
+
+4. **Verify the Deployment**:
+   - Check the status of the release:
+     ```sh
+     helm status myrelease
+     ```
+
+5. **Upgrade the Release**:
+   - Make changes to the Helm chart and upgrade the release:
+     ```sh
+     helm upgrade myrelease mychart
+     ```
+
+6. **Rollback the Release**:
+   - Rollback to a previous release if needed:
+     ```sh
+     helm rollback myrelease 1
+     ```
+
+Congratulations! You've successfully completed basic cluster operations and Helm fundamentals.

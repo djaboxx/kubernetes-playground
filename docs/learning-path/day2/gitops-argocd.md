@@ -292,6 +292,47 @@ argocd app history myapp
 argocd app rollback myapp --to-revision=2
 ```
 
+## Hands-on Session: Deploying Applications Using ArgoCD
+
+In this hands-on session, we'll deploy an application using ArgoCD. Follow these steps:
+
+1. **Install ArgoCD CLI**:
+   - Download and install the ArgoCD CLI: [CLI Installation Guide](https://argo-cd.readthedocs.io/en/stable/cli_installation/)
+   - Verify the installation:
+     ```sh
+     argocd version
+     ```
+
+2. **Login to ArgoCD**:
+   - Login to your ArgoCD server:
+     ```sh
+     argocd login <ARGOCD_SERVER>
+     ```
+
+3. **Create a New Application**:
+   - Create a new application in ArgoCD:
+     ```sh
+     argocd app create my-app \
+       --repo https://github.com/argoproj/argocd-example-apps.git \
+       --path guestbook \
+       --dest-server https://kubernetes.default.svc \
+       --dest-namespace default
+     ```
+
+4. **Sync the Application**:
+   - Sync the application to deploy it:
+     ```sh
+     argocd app sync my-app
+     ```
+
+5. **Verify the Deployment**:
+   - Check the status of the application:
+     ```sh
+     argocd app get my-app
+     ```
+
+Congratulations! You've successfully deployed an application using ArgoCD.
+
 ## Additional Resources
 
 ### Official Guides
