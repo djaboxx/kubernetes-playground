@@ -4,6 +4,20 @@
 
 Our Kubernetes deployment follows a production-grade architecture with multiple layers of infrastructure and security controls. This document provides a high-level overview of how all components work together.
 
+# Architecture Overview
+
+## Cluster Design
+Details on the overall design and structure of the cluster.
+
+## Components
+Information on the core components and their roles within the cluster.
+
+## Networking
+Explanation of the networking setup, including VPC and subnet configurations.
+
+## Security
+Overview of the security measures in place, such as network policies and access controls.
+
 ## Architecture Layers
 
 ### Infrastructure Layer

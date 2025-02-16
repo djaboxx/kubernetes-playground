@@ -1,3 +1,17 @@
+# Core Components
+
+## Argo CD
+A tool for continuous delivery in Kubernetes, ensuring applications are in sync with the Git repository.
+
+## Cert Manager
+Manages TLS certificates, automating their creation, renewal, and management.
+
+## Ingress NGINX
+Manages external access to services, providing load balancing and SSL termination.
+
+## Prometheus Stack
+Monitors the cluster, visualizes data, and sends alerts.
+
 # Core GKE Cluster Components
 
 ## Container Cluster (google_container_cluster)

@@ -1,4 +1,13 @@
-# Kubernetes Alerts and Monitoring
+# Alerts and Monitoring
+
+## Prometheus and Grafana
+Use of Prometheus for metrics collection and Grafana for visualization.
+
+## Alert Manager
+Configuration of alerts to notify the team of any issues in the cluster.
+
+## Monitoring Best Practices
+Tips for effective monitoring and alerting to ensure cluster health and performance.
 
 ## Alert Types and Configurations
 
