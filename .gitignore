@@ -5,10 +5,15 @@
 .terraform.lock.hcl
 terraform.tfvars
 
+# Helm
+charts/**/charts/
+*.tgz
+
 # Kubernetes
 kubeconfig
 *.pem
 *.key
+*.kubeconfig
 
 # IDE
 .vscode/
@@ -16,3 +21,4 @@ kubeconfig
 
 # OS
 .DS_Store
+*.swp

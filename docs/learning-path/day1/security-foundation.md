@@ -76,7 +76,7 @@ More info: [Cert-Manager Basics](https://cert-manager.io/docs/installation/)
    spec:
      acme:
        server: https://acme-v02.api.letsencrypt.org/directory
-       email: admin@example.com  # For important notifications
+       email: dave@roknsound.com  # For important notifications
        privateKeySecretRef:
          name: letsencrypt-prod
        solvers:
