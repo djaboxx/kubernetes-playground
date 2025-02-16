@@ -5,7 +5,15 @@
         },
         {
             "path": "../argocd",
-            "name": "argocd"
+            "name": "code/argocd"
+        },
+        {
+            "path": "../helm-charts",
+            "name": "code/helm-charts"
+        },
+        {
+            "path": "../kubernetes-terraform",
+            "name": "code/terraform"
         },
         {
             "path": "../providers/terraform-provider-argocd/docs",
