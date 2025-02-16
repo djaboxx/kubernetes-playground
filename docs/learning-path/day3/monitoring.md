@@ -296,6 +296,83 @@ Create a dashboard to watch service health:
 ```
 Reference: [Grafana Dashboard JSON](https://grafana.com/docs/grafana/latest/dashboards/json-model/)
 
+## Hands-on Session: Setting Up Monitoring and Alerts
+
+In this hands-on session, we'll set up monitoring and alerts for your Kubernetes cluster. Follow these steps:
+
+1. **Install Prometheus and Grafana**:
+   - Install Prometheus and Grafana using Helm:
+     ```sh
+     helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+     helm repo add grafana https://grafana.github.io/helm-charts
+     helm install prometheus prometheus-community/kube-prometheus-stack
+     helm install grafana grafana/grafana
+     ```
+
+2. **Configure Prometheus**:
+   - Edit the Prometheus configuration to set up alert rules:
+     ```yaml
+     # prometheus-rules.yaml
+     apiVersion: monitoring.coreos.com/v1
+     kind: PrometheusRule
+     metadata:
+       name: kubernetes-monitoring
+       namespace: monitoring
+     spec:
+       groups:
+       - name: kubernetes.rules
+         rules:
+         - alert: KubernetesPodCrashLooping
+           expr: rate(kube_pod_container_status_restarts_total[15m]) * 60 * 5 > 0
+           for: 15m
+           labels:
+             severity: warning
+           annotations:
+             description: Pod {{ $labels.namespace }}/{{ $labels.pod }} keeps restarting
+     ```
+
+3. **Set Up Grafana Dashboards**:
+   - Import pre-built dashboards for Kubernetes monitoring:
+     ```sh
+     kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/kube-prometheus/main/manifests/grafana-dashboardDefinitions.yaml
+     ```
+
+4. **Configure Alert Manager**:
+   - Set up Alert Manager to send notifications to Slack:
+     ```yaml
+     # alertmanager-config.yaml
+     alertmanager:
+       config:
+         global:
+           resolve_timeout: 5m
+           slack_api_url: 'https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK'
+         route:
+           group_by: ['namespace', 'severity']
+           group_wait: 30s
+           group_interval: 5m
+           repeat_interval: 12h
+           receiver: 'slack-notifications'
+           routes:
+           - match:
+               severity: critical
+             receiver: 'pagerduty-critical'
+         receivers:
+         - name: 'slack-notifications'
+           slack_configs:
+           - channel: '#alerts'
+             send_resolved: true
+             title: '[{{ .Status | toUpper }}] {{ .CommonLabels.alertname }}'
+             text: "{{ range .Alerts }}{{ .Annotations.description }}\n{{ end }}"
+     ```
+
+5. **Verify the Setup**:
+   - Check the status of Prometheus, Grafana, and Alert Manager:
+     ```sh
+     kubectl get pods -n monitoring
+     ```
+
+Congratulations! You've successfully set up monitoring and alerts for your Kubernetes cluster.
+
 ## Additional Resources
 
 ### Official Documentation

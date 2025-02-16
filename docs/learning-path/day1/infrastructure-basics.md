@@ -259,3 +259,42 @@ Details: [GKE Monitoring](https://cloud.google.com/kubernetes-engine/docs/how-to
 - Set good scaling limits
 - Check resource usage often
 More tips: [GKE Cost Optimization](https://cloud.google.com/kubernetes-engine/docs/best-practices/cost-optimization)
+
+## Hands-on Session: Setting Up a Basic Kubernetes Cluster on GKE
+
+In this hands-on session, we'll set up a basic Kubernetes cluster on Google Kubernetes Engine (GKE). Follow these steps:
+
+1. **Set Up Google Cloud SDK**:
+   - Install the Google Cloud SDK: [Installation Guide](https://cloud.google.com/sdk/docs/install)
+   - Initialize the SDK: `gcloud init`
+
+2. **Create a GKE Cluster**:
+   - Create a new GKE cluster using the following command:
+     ```sh
+     gcloud container clusters create my-cluster --zone us-central1-a --num-nodes 3
+     ```
+
+3. **Configure kubectl**:
+   - Get the cluster credentials:
+     ```sh
+     gcloud container clusters get-credentials my-cluster --zone us-central1-a
+     ```
+
+4. **Deploy a Sample Application**:
+   - Create a deployment:
+     ```sh
+     kubectl create deployment hello-world --image=gcr.io/google-samples/hello-app:1.0
+     ```
+   - Expose the deployment as a service:
+     ```sh
+     kubectl expose deployment hello-world --type=LoadBalancer --port 80 --target-port 8080
+     ```
+
+5. **Verify the Deployment**:
+   - Get the external IP of the service:
+     ```sh
+     kubectl get services
+     ```
+   - Access the application using the external IP.
+
+Congratulations! You've successfully set up a basic Kubernetes cluster on GKE and deployed a sample application.

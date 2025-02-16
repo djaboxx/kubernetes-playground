@@ -1,4 +1,4 @@
-# Maintenance Procedures
+# Maintenance Procedures and Cost Management
 
 This guide explains how to keep your Kubernetes cluster healthy and running smoothly. We'll cover backup procedures, updates, performance tuning, and cost management.
 
@@ -263,6 +263,111 @@ spec:
         description: Weekly cost exceeds $5000
 ```
 Reference: [KubeCost Documentation](https://guide.kubecost.com/)
+
+## Hands-on Session: Maintenance Procedures and Cost Management
+
+In this hands-on session, we'll cover maintenance procedures and cost management for your Kubernetes cluster. Follow these steps:
+
+1. **Set Up Velero for Backups**:
+   - Install Velero using Helm:
+     ```sh
+     helm repo add vmware-tanzu https://vmware-tanzu.github.io/helm-charts
+     helm install velero vmware-tanzu/velero --namespace velero --create-namespace
+     ```
+
+2. **Create a Backup Schedule**:
+   - Create a daily backup schedule:
+     ```yaml
+     # velero-backup-schedule.yaml
+     apiVersion: velero.io/v1
+     kind: Schedule
+     metadata:
+       name: daily-backup
+       namespace: velero
+     spec:
+       schedule: "0 1 * * *"
+       template:
+         includedNamespaces:
+           - "*"
+         excludedNamespaces:
+           - kube-system
+         includeClusterResources: true
+         storageLocation: default
+         volumeSnapshotLocations:
+           - default
+         ttl: 720h
+     ```
+
+3. **Set Up Resource Quotas**:
+   - Create a resource quota for a team:
+     ```yaml
+     # resource-quota.yaml
+     apiVersion: v1
+     kind: ResourceQuota
+     metadata:
+       name: compute-quota
+       namespace: production
+     spec:
+       hard:
+         requests.cpu: "20"
+         requests.memory: 40Gi
+         limits.cpu: "40"
+         limits.memory: 80Gi
+         pods: "50"
+     ```
+
+4. **Install KubeCost for Cost Monitoring**:
+   - Install KubeCost using Helm:
+     ```sh
+     helm repo add kubecost https://kubecost.github.io/cost-analyzer/
+     helm install kubecost kubecost/cost-analyzer --namespace kubecost --create-namespace
+     ```
+
+5. **Set Up Cost Alerts**:
+   - Create cost alerts using Prometheus:
+     ```yaml
+     # cost-alerts.yaml
+     apiVersion: monitoring.coreos.com/v1
+     kind: PrometheusRule
+     metadata:
+       name: cost-alerts
+     spec:
+       groups:
+       - name: costs
+         rules:
+         - alert: HighCostWarning
+           expr: |
+             sum(
+               rate(container_cpu_usage_seconds_total[24h]) * on(node) group_left()
+               node_cpu_hourly_cost
+             ) > 1000
+           for: 6h
+           labels:
+             severity: warning
+           annotations:
+             description: Daily cost exceeds $1000
+         - alert: BudgetExceeded
+           expr: |
+             sum(
+               rate(container_cpu_usage_seconds_total[7d]) * on(node) group_left()
+               node_cpu_hourly_cost
+             ) > 5000
+           for: 1d
+           labels:
+             severity: critical
+           annotations:
+             description: Weekly cost exceeds $5000
+     ```
+
+6. **Verify the Setup**:
+   - Check the status of Velero, KubeCost, and Prometheus:
+     ```sh
+     kubectl get pods -n velero
+     kubectl get pods -n kubecost
+     kubectl get pods -n monitoring
+     ```
+
+Congratulations! You've successfully set up maintenance procedures and cost management for your Kubernetes cluster.
 
 ## Additional Resources
 
