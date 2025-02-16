@@ -6,21 +6,25 @@
 - [Conventions Used in This Book](docs/conventions.md)
 
 ## Part I: Getting Started
+- [Summary](docs/getting-started/README.md)
 - [Introduction to Kubernetes](docs/getting-started/introduction-to-kubernetes.md)
 - [Setting Up Your Environment](docs/getting-started/setting-up-your-environment.md)
 - [Basic Cluster Operations](docs/getting-started/basic-cluster-operations.md)
 
 ## Part II: Core Components
+- [Summary](docs/core-components/README.md)
 - [Argo CD](docs/core-components/argo-cd/README.md)
 - [Cert-Manager](docs/core-components/cert-manager/README.md)
 - [Ingress NGINX](docs/core-components/ingress-nginx/README.md)
 - [Prometheus Stack](docs/core-components/prometheus/README.md)
 
 ## Part III: Advanced Topics
+- [Summary](docs/advanced-topics/README.md)
 - [Continuous Delivery with Argo CD](docs/advanced-topics/continuous-delivery-with-argo-cd.md)
 - [Security Best Practices](docs/advanced-topics/security-best-practices.md)
 - [Observability with Prometheus and Grafana](docs/advanced-topics/observability-with-prometheus-and-grafana.md)
 - [Logging with EFK Stack](docs/advanced-topics/logging-with-efk-stack.md)
+- [Network tracing and Routing with Istio](docs/advanced-topics/istio-network-tracing-and-routing.md)
 
 ## Part IV: Real-World Examples
 - [Architecture Overview](docs/realworld-examples/00-architecture-overview.md)
