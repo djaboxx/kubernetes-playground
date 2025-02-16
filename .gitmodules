@@ -1,9 +1,12 @@
 [submodule "helm-charts/argo-helm"]
     path = helm-charts/argo-helm
     url = https://github.com/argoproj/argo-helm.git
-[submodule "helm-charts/cert-manager-helm"]
-    path = helm-charts/cert-manager-helm
-    url = https://github.com/cert-manager/cert-manager-helm.git
+[submodule "helm-charts/cert-manager"]
+    path = helm-charts/cert-manager
+    url = https://github.com/cert-manager/cert-manager.git
 [submodule "helm-charts/external-dns"]
     path = helm-charts/external-dns
-    url = https://github.com/bitnami/charts.git
+    url = https://github.com/kubernetes-sigs/external-dns.git
+[submodule "docs/istio"]
+    path = docs/istio
+    url = https://github.com/istio/istio.git

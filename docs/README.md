@@ -1,3 +1,69 @@
+# Documentation Index
+
+For a detailed overview of the documentation, refer to the [Summary](SUMMARY.md).
+
+## 3-Day Course
+- [Day 1](3-day-course/day-1.md)
+- [Day 2](3-day-course/day-2.md)
+- [Day 3](3-day-course/day-3.md)
+
+## Argo CD
+- [Argo CD Documentation](argo-cd/README.md)
+
+## Cert-Manager
+- [Cert-Manager Documentation](cert-manager/README.md)
+- [Vault Integration](cert-manager/vault-integration.md)
+
+## Compiled
+- [Basics](compiled/basics/)
+- [Delivery](compiled/delivery/)
+- [Observability](compiled/observability/)
+- [Realworld Examples](compiled/realworld-examples/)
+- [Security](compiled/security/)
+- [Day 2](compiled/day-2.md)
+- [Day 3](compiled/day-3.md)
+
+## Core Components
+- [Argo CD](core-components/argo-cd/)
+- [Cert-Manager](core-components/cert-manager/)
+- [Ingress NGINX](core-components/ingress-nginx/)
+- [Istio](core-components/istio/)
+- [Prometheus](core-components/prometheus/)
+
+## External Dependencies
+- [Configuration Guide](external-dependencies/configuration-guide.md)
+- [Repository Management](external-dependencies/repository-management.md)
+
+## Ingress NGINX
+- [Ingress NGINX Documentation](ingress-nginx/README.md)
+
+## Learning Path
+- [Day 1](learning-path/day1/)
+- [Day 2](learning-path/day2/)
+- [Day 3](learning-path/day3/)
+
+## Realworld Examples
+- [Architecture Overview](realworld-examples/00-architecture-overview.md)
+- [Core Components](realworld-examples/01-core-components.md)
+- [Networking & Security](realworld-examples/02-networking-security.md)
+- [Operations](realworld-examples/03-operations.md)
+- [Platform Tools](realworld-examples/04-platform-tools.md)
+- [Terraform Guide](realworld-examples/05-terraform-guide.md)
+- [Alerts & Monitoring](realworld-examples/06-alerts-monitoring.md)
+- [Environment Config](realworld-examples/07-environment-config.md)
+- [Cluster](realworld-examples/cluster.md)
+- [Current vs Best Practices](realworld-examples/current-vs-best-practices.md)
+- [Directory Overview](realworld-examples/directory-overview.md)
+- [Infrastructure Guide](realworld-examples/infrastructure-guide.md)
+- [Overview](realworld-examples/overview.md)
+- [Technical Details](realworld-examples/technical-details.md)
+
+## Tech Stack
+- [Argo CD](tech-stack/argo-cd.md)
+- [Cert-Manager](tech-stack/cert-manager.md)
+- [EFK Stack](tech-stack/efk-stack.md)
+- [Vault](tech-stack/vault.md)
+
 # Kubernetes Components Documentation
 
 This documentation covers the key components installed in this Kubernetes cluster via Helm charts.
