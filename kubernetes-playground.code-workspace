@@ -20,6 +20,10 @@
             "name": "docs/argocd"
         },
         {
+            "path": "../istio/website/content/en/docs",
+            "name": "docs/istio"
+        },
+        {
             "path": "../providers/terraform-provider-helm/docs",
             "name": "docs/helm"
         },

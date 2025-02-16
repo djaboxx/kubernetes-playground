@@ -1,31 +1,45 @@
 # Cert-Manager
 
 ## Overview
-Cert-Manager is a native Kubernetes certificate management controller. It simplifies the process of obtaining, renewing and using SSL/TLS certificates in your Kubernetes cluster.
+
+Cert-Manager is a native Kubernetes certificate management controller that helps with X.509 certificate issuance and management. It can issue certificates from various sources including Let's Encrypt, HashiCorp Vault, and self-signed.
 
 ## Features
-- Automatic certificate issuance and renewal
-- Support for multiple certificate authorities (Let's Encrypt, HashiCorp Vault, etc.)
-- ACME protocol support (HTTP01 and DNS01 challenges)
-- Custom resource definitions for certificates
-- Integration with Ingress resources
+
+- Automated certificate issuance and renewal
+- Support for multiple certificate authorities
+- Integration with Kubernetes Ingress resources
+- Multiple issuers support (Let's Encrypt, Vault, self-signed)
+- Certificate rotation and expiry monitoring
 
 ## Installation
 
+### Using Helm (Recommended)
+
 ```bash
+# Add the Jetstack Helm repository
 helm repo add jetstack https://charts.jetstack.io
-helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --set installCRDs=true
+helm repo update
+
+# Install cert-manager
+helm install cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --create-namespace \
+  --version v1.5.3 \
+  --set installCRDs=true
 ```
 
-## Core Concepts
-1. **Issuer/ClusterIssuer**: Represents a certificate authority (CA)
-2. **Certificate**: Request for a TLS certificate
-3. **CertificateRequest**: Low-level resource for certificate generation
-4. **Orders and Challenges**: ACME protocol resources
+### Verification
 
-## Configuration Examples
+Check if cert-manager pods are running:
+```bash
+kubectl get pods -n cert-manager
+```
 
-1. **ClusterIssuer for Let's Encrypt Production**
+## Basic Configuration
+
+### Creating a ClusterIssuer
+
 ```yaml
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -34,7 +48,7 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: dave@roknsound.com
+    email: your-email@example.com
     privateKeySecretRef:
       name: letsencrypt-prod
     solvers:
@@ -43,67 +57,63 @@ spec:
           class: nginx
 ```
 
-2. **Certificate Request**
+### Requesting a Certificate
+
 ```yaml
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: example-com-tls
+  name: example-cert
+  namespace: default
 spec:
-  secretName: example-com-tls
+  secretName: example-cert-tls
+  duration: 2160h # 90 days
+  renewBefore: 360h # 15 days
+  subject:
+    organizations:
+      - Example Inc.
+  commonName: example.com
+  dnsNames:
+    - example.com
+    - www.example.com
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
-  dnsNames:
-  - example.com
-  - www.example.com
 ```
+
+## Integration Options
+
+- Let's Encrypt (ACME)
+- HashiCorp Vault
+- Venafi
+- Self-signed certificates
+- External CAs
 
 ## Best Practices
-1. **Production Setup**
-   - Use ClusterIssuer for cluster-wide certificate management
-   - Set appropriate rate limits
-   - Monitor certificate expiration
 
-2. **Security**
-   - Use production CAs for production environments
-   - Secure ACME account keys
-   - Regular auditing of certificates
-
-3. **Resource Management**
-   - Set resource requests and limits
-   - Configure appropriate renewal windows
-   - Clean up unused certificates
+1. Always use production ACME server for production environments
+2. Implement proper monitoring for certificate expiration
+3. Use ClusterIssuers for cluster-wide certificate management
+4. Configure appropriate backup for certificate secrets
+5. Set up alerting for certificate-related events
 
 ## Troubleshooting
-1. **Common Issues**
-   - ACME challenge failures
-   - DNS configuration problems
-   - Rate limiting issues
 
-2. **Debug Commands**
-```bash
-kubectl describe certificate <name>
-kubectl describe certificaterequest <name>
-kubectl describe challenge <name>
-kubectl get events --field-selector type=Warning
-```
+Common issues and solutions:
 
-## Monitoring
-1. **Key Metrics**
-   - Certificate expiration
-   - Renewal success rate
-   - ACME challenge duration
+1. Certificate not being issued
+   - Check cert-manager logs
+   - Verify ClusterIssuer/Issuer configuration
+   - Check Certificate resource events
 
-2. **Prometheus Integration**
-```yaml
-prometheus:
-  enabled: true
-  servicemonitor:
-    enabled: true
-```
+2. HTTP01 challenge failures
+   - Verify ingress configuration
+   - Check network connectivity
+   - Ensure proper DNS configuration
 
-## Additional Resources
+## External Resources
+
 - [Official Documentation](https://cert-manager.io/docs/)
-- [Supported Issuer Types](https://cert-manager.io/docs/configuration/)
+- [GitHub Repository](https://github.com/cert-manager/cert-manager)
 - [Troubleshooting Guide](https://cert-manager.io/docs/troubleshooting/)
+- [Integration Tutorials](https://cert-manager.io/docs/tutorials/)

@@ -1,6 +1,7 @@
 # Istio Automation Guide
 
 ## GitOps Integration
+Integrate Istio with GitOps using ArgoCD by defining an application that syncs with your Git repository and automates deployments.
 
 ### ArgoCD Setup
 
@@ -28,6 +29,7 @@ spec:
 ## CI/CD Pipeline Integration
 
 ### 1. Pre-deployment Checks
+Perform pre-deployment checks using `istioctl` to analyze and verify the installation.
 ```yaml
 steps:
 - name: istio-analyze
@@ -37,6 +39,7 @@ steps:
 ```
 
 ### 2. Canary Deployment Automation
+Automate canary deployments by defining traffic routing rules that gradually shift traffic to the new version.
 ```yaml
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
@@ -62,6 +65,7 @@ spec:
 ## Operational Tasks Automation
 
 ### 1. Certificate Rotation
+Automate certificate rotation by prechecking, upgrading, and restarting Istio components.
 ```bash
 #!/bin/bash
 # cert-rotation.sh
@@ -72,6 +76,7 @@ kubectl rollout restart deployment -n istio-system istiod
 ```
 
 ### 2. Configuration Validation
+Validate configurations using `istioctl` to analyze and wait for distribution of custom resources.
 ```bash
 #!/bin/bash
 # validate-config.sh
@@ -82,6 +87,7 @@ istioctl experimental wait --for=distribution CustomResourceDefinition/virtualse
 ## Infrastructure as Code
 
 ### 1. Terraform Integration
+Use Terraform to manage Istio resources, including namespaces and Helm releases.
 ```hcl
 resource "kubernetes_namespace" "istio_system" {
   metadata {
@@ -101,6 +107,7 @@ resource "helm_release" "istio_base" {
 ```
 
 ### 2. Helm Value Automation
+Automate Helm values for global proxy settings, gateway autoscaling, and telemetry.
 ```yaml
 global:
   proxy:
@@ -127,6 +134,7 @@ telemetry:
 ## Monitoring Automation
 
 ### 1. Alert Configuration
+Configure alerts for Istio metrics using Prometheus rules.
 ```yaml
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
@@ -147,6 +155,7 @@ spec:
 ```
 
 ### 2. Automated Reporting
+Generate automated reports by collecting and formatting Istio metrics.
 ```python
 #!/usr/bin/env python3
 # generate_istio_report.py
@@ -168,6 +177,7 @@ def generate_report():
 ## Maintenance Automation
 
 ### 1. Health Checks
+Automate health checks for Istio components and mesh health using `istioctl`.
 ```bash
 #!/bin/bash
 # health-check.sh

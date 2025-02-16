@@ -27,37 +27,10 @@ Istio is an open-source service mesh that provides a uniform way to connect, sec
 - kubectl configured
 
 ### Basic Installation
-```bash
-# Download Istio
-curl -L https://istio.io/downloadIstio | sh -
-
-# Add istioctl to path
-export PATH=$PWD/istio-x.y.z/bin:$PATH
-
-# Install Istio with demo profile
-istioctl install --set profile=demo -y
-```
-
-### Production Installation with Helm
-```bash
-helm repo add istio https://istio-release.storage.googleapis.com/charts
-helm repo update
-
-# Install base chart
-helm install istio-base istio/base -n istio-system --create-namespace
-
-# Install istiod
-helm install istiod istio/istiod -n istio-system --wait
-
-# Install ingress gateway
-helm install istio-ingress istio/gateway -n istio-system
-```
+To install Istio, download the Istio package, add `istioctl` to your path, and install Istio with the demo profile. For production installations, use Helm to install the base chart, istiod, and ingress gateway.
 
 ## Sidecar Injection
-Enable automatic sidecar injection for a namespace:
-```bash
-kubectl label namespace default istio-injection=enabled
-```
+Enable automatic sidecar injection for a namespace by labeling the namespace with `istio-injection=enabled`.
 
 ## Next Steps
 - [Traffic Management Guide](./traffic-management.md)

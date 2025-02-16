@@ -5,112 +5,19 @@
 ### Virtual Services
 Virtual Services define how requests are routed to a service. They provide a way to configure traffic rules for how requests are handled.
 
-```yaml
-apiVersion: networking.istio.io/v1beta1
-kind: VirtualService
-metadata:
-  name: reviews-route
-spec:
-  hosts:
-  - reviews
-  http:
-  - match:
-    - headers:
-        end-user:
-          exact: jason
-    route:
-    - destination:
-        host: reviews
-        subset: v2
-  - route:
-    - destination:
-        host: reviews
-        subset: v1
-```
-
 ### Destination Rules
 Destination Rules define policies that apply to traffic intended for a service after routing has occurred.
-
-```yaml
-apiVersion: networking.istio.io/v1beta1
-kind: DestinationRule
-metadata:
-  name: reviews-destination
-spec:
-  host: reviews
-  subsets:
-  - name: v1
-    labels:
-      version: v1
-  - name: v2
-    labels:
-      version: v2
-```
 
 ## Traffic Management Patterns
 
 ### 1. Canary Deployments
-Gradually roll out changes by routing a percentage of traffic to a new version:
-
-```yaml
-apiVersion: networking.istio.io/v1beta1
-kind: VirtualService
-metadata:
-  name: my-service
-spec:
-  hosts:
-  - my-service
-  http:
-  - route:
-    - destination:
-        host: my-service
-        subset: v1
-      weight: 90
-    - destination:
-        host: my-service
-        subset: v2
-      weight: 10
-```
+Gradually roll out changes by routing a percentage of traffic to a new version to ensure stability and minimize risk.
 
 ### 2. Circuit Breaking
-Prevent cascading failures:
-
-```yaml
-apiVersion: networking.istio.io/v1beta1
-kind: DestinationRule
-metadata:
-  name: circuit-breaker
-spec:
-  host: my-service
-  trafficPolicy:
-    outlierDetection:
-      consecutive5xxErrors: 5
-      interval: 30s
-      baseEjectionTime: 30s
-```
+Prevent cascading failures by limiting the impact of failing services and isolating them from the rest of the system.
 
 ### 3. Fault Injection
-Test service resilience:
-
-```yaml
-apiVersion: networking.istio.io/v1beta1
-kind: VirtualService
-metadata:
-  name: ratings
-spec:
-  hosts:
-  - ratings
-  http:
-  - fault:
-      delay:
-        percentage:
-          value: 10.0
-        fixedDelay: 5s
-    route:
-    - destination:
-        host: ratings
-        subset: v1
-```
+Test service resilience by simulating failures and observing how the system responds.
 
 ## Best Practices
 
@@ -131,16 +38,7 @@ spec:
 
 ## Monitoring Traffic Flow
 
-```bash
-# View routing configuration
-istioctl analyze
-
-# Check proxy configuration
-istioctl proxy-config routes <pod-name>
-
-# Visualize service mesh
-istioctl dashboard kiali
-```
+Use `istioctl` commands to view routing configuration, check proxy configuration, and visualize the service mesh with Kiali.
 
 ## Troubleshooting
 
@@ -150,13 +48,4 @@ istioctl dashboard kiali
    - Performance degradation
 
 2. **Debug Commands**
-```bash
-# Check proxy logs
-kubectl logs <pod-name> -c istio-proxy
-
-# Verify configuration
-istioctl analyze namespace <namespace>
-
-# Debug routing
-istioctl proxy-config dump <pod-name>
-```
+Use `kubectl` and `istioctl` commands to check proxy logs, verify configuration, and debug routing issues.

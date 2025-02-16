@@ -1,34 +1,49 @@
-# Ingress NGINX Controller
+# Ingress NGINX
 
 ## Overview
-The NGINX Ingress Controller is a Kubernetes ingress controller using NGINX as a reverse proxy and load balancer. It provides HTTP and HTTPS routing, SSL termination, and advanced traffic management features.
+
+The NGINX Ingress Controller for Kubernetes provides HTTP and HTTPS routing to services within your Kubernetes cluster. It serves as an essential component for exposing your applications to the outside world.
 
 ## Features
-- HTTP/HTTPS routing
-- Load balancing
-- SSL/TLS termination
+
+- Layer 7 load balancing
+- TLS/SSL termination
+- Name-based virtual hosting
 - Path-based routing
-- Host-based routing
 - Rate limiting
-- Authentication
+- SSL passthrough
 - WebSocket support
+- Multiple protocols support (HTTP, HTTPS, TCP, UDP)
 
 ## Installation
 
+### Using Helm
+
 ```bash
+# Add the ingress-nginx repository
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-helm install ingress-nginx ingress-nginx/ingress-nginx
+helm repo update
+
+# Install the ingress-nginx controller
+helm install ingress-nginx ingress-nginx/ingress-nginx \
+  --namespace ingress-nginx \
+  --create-namespace
 ```
 
-## Core Concepts
-1. **Ingress Resource**: Kubernetes API object defining routing rules
-2. **Ingress Controller**: NGINX implementation that enforces rules
-3. **Service**: Backend services receiving traffic
-4. **ConfigMap**: NGINX configuration customization
+### Verification
 
-## Configuration Examples
+```bash
+# Check if the controller pod is running
+kubectl get pods -n ingress-nginx
 
-1. **Basic Ingress Resource**
+# Check the created services
+kubectl get svc -n ingress-nginx
+```
+
+## Basic Configuration
+
+### Simple HTTP Ingress
+
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -50,13 +65,15 @@ spec:
               number: 80
 ```
 
-2. **SSL/TLS Configuration**
+### HTTPS Configuration with TLS
+
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: tls-example-ingress
 spec:
+  ingressClassName: nginx
   tls:
   - hosts:
       - example.com
@@ -74,51 +91,88 @@ spec:
               number: 80
 ```
 
-## Best Practices
-1. **Security**
-   - Enable SSL/TLS
-   - Configure secure headers
-   - Implement rate limiting
-   - Use authentication where needed
-
-2. **Performance**
-   - Configure worker processes
-   - Enable keepalive connections
-   - Optimize proxy buffers
-   - Configure proper timeouts
-
-3. **Monitoring**
-   - Enable metrics
-   - Monitor error rates
-   - Track latency
-   - Set up alerts
-
 ## Common Annotations
+
+Important annotations for customizing behavior:
+
 ```yaml
-nginx.ingress.kubernetes.io/proxy-body-size: "10m"
-nginx.ingress.kubernetes.io/proxy-connect-timeout: "30"
-nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
-nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
-nginx.ingress.kubernetes.io/proxy-buffer-size: "8k"
 nginx.ingress.kubernetes.io/ssl-redirect: "true"
+nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+nginx.ingress.kubernetes.io/proxy-body-size: "8m"
+nginx.ingress.kubernetes.io/proxy-connect-timeout: "15"
+```
+
+## Best Practices
+
+1. Always enable TLS for production environments
+2. Use rate limiting for public endpoints
+3. Configure appropriate resource limits
+4. Implement proper monitoring
+5. Use separate ingress resources for different applications
+6. Configure default backend for 404 handling
+
+## Advanced Features
+
+### SSL Passthrough
+Useful for applications that handle their own TLS termination:
+
+```yaml
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+```
+
+### Rate Limiting
+Protect your services from overload:
+
+```yaml
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/limit-rps: "10"
+    nginx.ingress.kubernetes.io/limit-connections: "5"
+```
+
+### Rewrite Rules
+Modify incoming requests:
+
+```yaml
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /api(/|$)(.*)
+        pathType: Prefix
 ```
 
 ## Troubleshooting
-1. **Common Issues**
-   - 502 Bad Gateway
-   - SSL certificate problems
-   - Path routing issues
-   - Backend connectivity
 
-2. **Debug Commands**
-```bash
-kubectl get ingress
-kubectl describe ingress <name>
-kubectl logs -n ingress-nginx -l app.kubernetes.io/name=ingress-nginx
-kubectl get events --field-selector type=Warning
-```
+Common issues and solutions:
 
-## Additional Resources
+1. 404 Errors
+   - Check path configuration
+   - Verify service and port names
+   - Check backend service is running
+
+2. SSL/TLS Issues
+   - Verify certificate secret exists
+   - Check TLS configuration
+   - Validate certificate validity
+
+3. Performance Issues
+   - Monitor resource usage
+   - Check for bottlenecks
+   - Review rate limiting settings
+
+## External Resources
+
 - [Official Documentation](https://kubernetes.github.io/ingress-nginx/)
+- [GitHub Repository](https://github.com/kubernetes/ingress-nginx)
 - [Configuration Guide](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/)
-- [Annotations Reference](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/)
+- [Annotations List](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/)
+
+## Networking and Security Components
+...content from 02-networking-security.md...

@@ -1,10 +1,10 @@
-# Realworld Kubernetes Deployment Architecture
+# Architecture Overview
+
+## Realworld Kubernetes Deployment Architecture
 
 ## Overview
 
 Our Kubernetes deployment follows a production-grade architecture with multiple layers of infrastructure and security controls. This document provides a high-level overview of how all components work together.
-
-# Architecture Overview
 
 ## Cluster Design
 Details on the overall design and structure of the cluster.

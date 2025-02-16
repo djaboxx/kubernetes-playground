@@ -3,87 +3,23 @@
 ## Authentication
 
 ### 1. Peer Authentication
-Controls service-to-service authentication:
-
-```yaml
-apiVersion: security.istio.io/v1beta1
-kind: PeerAuthentication
-metadata:
-  name: default
-  namespace: istio-system
-spec:
-  mtls:
-    mode: STRICT
-```
+Controls service-to-service authentication by enabling mutual TLS (mTLS) for secure communication between services.
 
 ### 2. Request Authentication
-Validates JWT tokens for end-user authentication:
-
-```yaml
-apiVersion: security.istio.io/v1beta1
-kind: RequestAuthentication
-metadata:
-  name: jwt-example
-  namespace: foo
-spec:
-  selector:
-    matchLabels:
-      app: hello
-  jwtRules:
-  - issuer: "https://accounts.google.com"
-    jwksUri: "https://www.googleapis.com/oauth2/v3/certs"
-```
+Validates JWT tokens for end-user authentication to ensure only authorized users can access services.
 
 ## Authorization
 
 ### Service-to-Service Authorization
-```yaml
-apiVersion: security.istio.io/v1beta1
-kind: AuthorizationPolicy
-metadata:
-  name: httpbin
-  namespace: default
-spec:
-  selector:
-    matchLabels:
-      app: httpbin
-  rules:
-  - from:
-    - source:
-        principals: ["cluster.local/ns/default/sa/sleep"]
-    to:
-    - operation:
-        methods: ["GET"]
-        paths: ["/info*"]
-```
+Defines policies to control which services can communicate with each other and what actions they can perform.
 
 ## mTLS Configuration
 
 ### 1. Global mTLS
-Enable mesh-wide mTLS:
-
-```yaml
-apiVersion: security.istio.io/v1beta1
-kind: PeerAuthentication
-metadata:
-  name: default
-  namespace: istio-system
-spec:
-  mtls:
-    mode: STRICT
-```
+Enable mesh-wide mTLS to secure all service-to-service communication within the mesh.
 
 ### 2. Namespace-level mTLS
-```yaml
-apiVersion: security.istio.io/v1beta1
-kind: PeerAuthentication
-metadata:
-  name: default
-  namespace: your-namespace
-spec:
-  mtls:
-    mode: PERMISSIVE
-```
+Configure mTLS for specific namespaces to provide flexibility in security settings.
 
 ## Security Best Practices
 
@@ -105,28 +41,10 @@ spec:
 ## Implementation Steps
 
 1. **Enable Security Features**
-```bash
-# Verify mTLS status
-istioctl analyze
-
-# Check authentication policies
-kubectl get peerauthentication --all-namespaces
-
-# Verify authorization policies
-kubectl get authorizationpolicy --all-namespaces
-```
+Verify mTLS status, check authentication policies, and verify authorization policies using `istioctl` and `kubectl` commands.
 
 2. **Monitor Security**
-```bash
-# Check proxy certificates
-istioctl proxy-status
-
-# Verify mTLS configuration
-istioctl authn tls-check <pod-name>
-
-# Debug authorization
-istioctl analyze -n <namespace>
-```
+Monitor proxy certificates, verify mTLS configuration, and debug authorization using `istioctl` commands.
 
 ## Troubleshooting
 
@@ -142,16 +60,7 @@ istioctl analyze -n <namespace>
    - Selector mismatches
 
 ### Debug Commands
-```bash
-# Check proxy certificates
-istioctl proxy-config secret <pod-name>
-
-# Verify policy enforcement
-istioctl x describe pod <pod-name>
-
-# Test authorization policies
-istioctl experimental authz check <pod-name>
-```
+Use `istioctl` commands to check proxy certificates, verify policy enforcement, and test authorization policies.
 
 ## Security Monitoring
 
@@ -162,6 +71,4 @@ istioctl experimental authz check <pod-name>
    - Certificate rotation events
 
 2. **Integration with Security Tools**
-   - SIEM systems
-   - Audit logging
-   - Compliance monitoring
+Integrate with SIEM systems, audit logging, and compliance monitoring tools to enhance security monitoring.
