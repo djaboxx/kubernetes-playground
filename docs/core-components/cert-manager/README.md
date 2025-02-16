@@ -34,7 +34,7 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: user@example.com
+    email: dave@roknsound.com
     privateKeySecretRef:
       name: letsencrypt-prod
     solvers:
