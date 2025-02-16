@@ -1,0 +1,110 @@
+{
+    "folders": [
+        {
+            "path": "."
+        },
+        {
+            "path": "../argocd",
+            "name": "argocd"
+        },
+        {
+            "path": "../providers/terraform-provider-argocd/docs",
+            "name": "docs/argocd"
+        },
+        {
+            "path": "../providers/terraform-provider-helm/docs",
+            "name": "docs/helm"
+        },
+        {
+            "path": "../docs/helm-api",
+            "name": "docs/helm-api"
+        },
+        {
+            "path": "../packer/website/content/docs",
+            "name": "docs/packer"
+        },
+        {
+            "path": "../providers/terraform-provider-kubernetes/docs/resources",
+            "name": "docs/kubernetes/resources"
+        },
+        {
+            "path": "../docs/kubernetes-api",
+            "name": "docs/kubernetes"
+        },
+        {
+            "path": "../providers/terraform-provider-kubernetes/docs/data-sources",
+            "name": "docs/kubernetes/data-sources"
+        },
+        {
+            "path": "../providers/terraform-provider-kubernetes/docs/functions",
+            "name": "docs/kubernetes/functions"
+        },
+        {
+            "path": "../providers/terraform-provider-kubernetes/docs/guides",
+            "name": "docs/kubernetes/guides"
+        },
+        {
+            "path": "../providers/terraform-provider-google/website/docs/r",
+            "name": "docs/google/resources"
+        },
+        {
+            "path": "../providers/terraform-provider-google/website/docs/d",
+            "name": "docs/google/data-sources"
+        },
+        {
+            "path": "../terraform/website/docs/language",
+            "name": "docs/terraform/language"
+        },
+        {
+            "path": "../providers/terraform-provider-vault/website/docs",
+            "name": "docs/vault"
+        },
+        {
+            "path": "../vault/website/content/docs",
+            "name": "docs/vault-core"
+        },
+        {
+            "path": "../vault/website/content/api-docs",
+            "name": "docs/vault-api"
+        },
+        {
+            "path": "../Clover/terraform-google-kubernetes_alerts"
+        },
+        {
+            "path": "../Clover/terraform-google-kubernetes_cluster",
+            "name": "realworld/cluster"
+        },
+        {
+            "path": "../Clover/terraform-google-kubernetes_init_charts",
+            "name": "realworld/init-charts"
+        },
+        {
+            "path": "../Clover/terraform-google-kubernetes-operational_charts",
+            "name": "realworld/operational-charts"
+        },
+        {
+            "path": "../Clover/terraform-google-kubernetes_proxy",
+            "name": "realworld/proxy"
+        },
+        {
+            "path": "../Clover/template-kubernetes-cluster",
+            "name": "realworld/template-cluster"
+        },
+        {
+            "path": "../Clover/template-kubernetes-resources",
+            "name": "realworld/template-resources"
+        },
+        {
+            "path": "../Clover/terraform-clover-gke_network_roles",
+            "name": "realworld/network-roles"
+        },
+        {
+            "path": "../Clover/terraform-clover-k8s_cluster_ws-external-providers",
+            "name": "realworld/external-providers"
+        },
+        {
+            "path": "../Clover/terraform-clover-k8s_resources_ws",
+            "name": "realworld/resources"
+        }
+    ]
+}

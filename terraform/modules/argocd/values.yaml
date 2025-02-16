@@ -1,0 +1,28 @@
+server:
+  ingress:
+    enabled: true
+    hosts:
+      - ${domain_name}
+    ingressClassName: nginx
+
+  extraArgs:
+    - --insecure # Remove this in production
+
+configs:
+  params:
+    server.insecure: true # Remove this in production
+    
+  cm:
+    url: https://${domain_name}
+    # Enable auto-sync by default
+    timeout.reconciliation: 180s
+    application.instanceLabelKey: argocd.argoproj.io/instance
+
+  rbac:
+    policy.default: role:readonly
+    policy.csv: |
+      p, role:org-admin, applications, *, */*, allow
+      p, role:org-admin, clusters, *, *, allow
+      p, role:org-admin, projects, *, *, allow
+      p, role:org-admin, repositories, *, *, allow
+      g, admin, role:org-admin
