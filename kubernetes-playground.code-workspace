@@ -20,7 +20,7 @@
             "name": "docs/argocd"
         },
         {
-            "path": "../istio/website/content/en/docs",
+            "path": "../istio",
             "name": "docs/istio"
         },
         {

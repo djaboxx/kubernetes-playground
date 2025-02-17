@@ -16,6 +16,12 @@
 - [Argo CD](content/core-components/argo-cd/README.md)
 - [Cert-Manager](content/core-components/cert-manager/README.md)
 - [Ingress NGINX](content/core-components/ingress-nginx/README.md)
+- [Istio](content/core-components/istio/README.md)
+  - [Common Patterns and Best Practices](content/core-components/istio/patterns.md)
+  - [Traffic Management Patterns](content/core-components/istio/traffic-management-patterns.md)
+  - [Observability Patterns](content/core-components/istio/observability-patterns.md)
+  - [Gateway and Security Patterns](content/core-components/istio/gateway-and-security-patterns.md)
+  - [Automation Guide](content/core-components/istio/automation.md)
 - [Prometheus Stack](content/core-components/prometheus/README.md)
 
 ## Part III: Advanced Topics
