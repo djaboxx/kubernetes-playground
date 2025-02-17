@@ -117,6 +117,10 @@
         {
             "path": "../Clover/terraform-clover-k8s_resources_ws",
             "name": "realworld/resources"
+        },
+        {
+            "path": "../terraform-github-repo",
+            "name": "code/github-repo"
         }
     ]
 }
